@@ -10,16 +10,10 @@ const {
   WrongAuthData,
 } = require('../utils/constants');
 
-const AuthError = require('../errors/AuthError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
-
-// const {
-//   errorHandler,
-//   validationErrorHandler,
-//   getMassiveErrorHandler,
-// } = require('../utils/errorHandlers');
 
 const { JWT_SECRET = config.get('jwtSecret') } = process.env;
 
@@ -74,10 +68,10 @@ module.exports.createUser = (req, res, next) => {
 };
 
 module.exports.updateProfile = (req, res, next) => {
-  const { name } = req.body;
+  const { email, name } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { name },
+    { email, name },
     { new: true, runValidators: true },
   )
     .orFail(new BadRequestError(NotFound))
@@ -96,5 +90,5 @@ module.exports.login = (req, res, next) => {
       );
       res.status(200).json({ token });
     })
-    .catch(() => next(new AuthError(WrongAuthData)));
+    .catch(() => next(new UnauthorizedError(WrongAuthData)));
 };

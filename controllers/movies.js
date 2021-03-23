@@ -1,6 +1,6 @@
 const Movie = require('../models/movie');
 
-const AuthError = require('../errors/AuthError');
+const ForbiddenError = require('../errors/ForbiddenError');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 
@@ -45,7 +45,7 @@ module.exports.removeMovie = (req, res, next) => {
     .orFail(new NotFoundError(NotFound))
     .then((movie) => {
       if (movie.owner.toString() !== req.user._id) {
-        throw new AuthError(NotYourMovie);
+        throw new ForbiddenError(NotYourMovie);
       }
       movie.remove()
         .then((deletingMovie) => res.json(deletingMovie));
