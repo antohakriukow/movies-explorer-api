@@ -16,6 +16,7 @@ https://github.com/antohakriukow/movies-explorer-api
 http://api.filmbook.students.nomoredomains.monster
 
 ### Change log
+* v1.2: [Diploma Level #15] bug fix.
 * v1.1: [Diploma Level #15] bug fix.
 * v1.0: [Diploma Level #15] api created.
 * initial: [Diploma Level #1] Initial commit.
