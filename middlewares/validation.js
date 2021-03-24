@@ -4,7 +4,14 @@ const checkUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30).required()
+    name: Joi.string().min(2).max(30).required(),
+  }),
+});
+
+const checkLoginPassword = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
   }),
 });
 
@@ -33,12 +40,13 @@ const checkMovie = celebrate({
 
 const checkId = celebrate({
   params: Joi.object().keys({
-    id: Joi.string().hex(),
+    id: Joi.string().hex().length(24),
   }),
 });
 
 module.exports = {
   checkUser,
+  checkLoginPassword,
   checkProfile,
   checkMovie,
   checkId,

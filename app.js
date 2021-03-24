@@ -9,7 +9,7 @@ const { NotFound } = require('./utils/constants');
 const NotFoundError = require('./errors/NotFoundError');
 
 const { createUser, login } = require('./controllers/users');
-const { checkUser } = require('./middlewares/validation');
+const { checkUser, checkLoginPassword } = require('./middlewares/validation');
 const auth = require('./middlewares/auth');
 
 const { PORT = config.get('port') } = process.env;
@@ -36,7 +36,7 @@ app.get('/crash-test', () => {
 });
 
 app.post('/signup', checkUser, createUser);
-app.post('/signin', checkUser, login);
+app.post('/signin', checkLoginPassword, login);
 
 app.use('/users', auth, require('./routes/users'));
 app.use('/movies', auth, require('./routes/movie'));
